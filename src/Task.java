@@ -31,23 +31,6 @@ public class Task {
     }
 
     @Override
-    public int hashCode() {
-        int hash = 17;
-        if (name != null) {
-            hash += name.hashCode();
-        }
-        hash *= 31;
-        if (description != null) {
-            hash += description.hashCode();
-        }
-        hash *= 31;
-        if (status != null) {
-            hash += status.hashCode();
-        }
-        return hash;
-    }
-
-    @Override
     public String toString() {
         return "Task{" + "name=" + name + '\'' + "description=" + description + '\'' + "status=" + status + "}";
     }

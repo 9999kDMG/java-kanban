@@ -2,9 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Manager {
-    private int idTask = 1; //идентификатор задачи
-    private int idSubtask = 1; //идентификатор задачи
-    private int idEpic = 1; //идентификатор задачи
+    private int id = 0; //идентификатор задачи
 
     private HashMap<Integer, Task> tasks = new HashMap<>();
     private HashMap<Integer, Subtask> subtasks = new HashMap<>();
@@ -13,10 +11,10 @@ public class Manager {
     //методы обычных задач
     int createATask(Task task) { //создание задачи
         if (task != null) {
-            this.tasks.put(this.idTask, task);
-            return this.idTask++;
+            tasks.put(id, task);
+            return id++;
         } else {
-            return 0;
+            return -1;
         }
     }
 
@@ -25,36 +23,32 @@ public class Manager {
     }
 
     void clearAllTask() { //удалить все задачи
-        this.tasks.clear();
-        this.idTask = 1;
+        tasks.clear();
     }
 
     void deleteTask(int id) { //удалить задачу по id
         if (tasks.containsKey(id)) {
-            this.tasks.remove(id);
-            this.idTask -= 1;
+            tasks.remove(id);
         }
     }
 
     void overwriteTask(int id, Task task) { //перезаписать задачу
         if (task != null) {
-            this.tasks.put(id, task);
+            tasks.put(id, task);
         }
     }
 
     ArrayList<Task> getListOfAllTasks() { //получить список задач
-        ArrayList<Task> listOfTasks = new ArrayList<>();
-        listOfTasks.addAll(tasks.values());
-        return listOfTasks;
+        return new ArrayList<Task>(tasks.values());
     }
 
     //методы подзадач
     int createASubtask(Subtask subtask) { //создание подзадачи
         if (subtask != null) {
-            this.subtasks.put(this.idSubtask, subtask);
-            return this.idSubtask++;
+            subtasks.put(id, subtask);
+            return id++;
         } else {
-            return 0;
+            return -1;
         }
     }
 
@@ -63,36 +57,32 @@ public class Manager {
     }
 
     void clearAllSubtask() { //удалить все подзадачи
-        this.subtasks.clear();
-        this.idSubtask = 1;
+        subtasks.clear();
     }
 
     void deleteSubtask(int id) { //удалить подзадачу по id
         if (subtasks.containsKey(id)) {
-            this.subtasks.remove(id);
-            this.idSubtask -= 1;
+            subtasks.remove(id);
         }
     }
 
     void overwriteSubtask(int id, Subtask subtask) { //перезаписать подзадачу
         if (subtask != null) {
-            this.subtasks.put(id, subtask);
+            subtasks.put(id, subtask);
         }
     }
 
     ArrayList<Subtask> getListOfAllSubtasks() { //получить список подзадач
-        ArrayList<Subtask> listOfSubtasks = new ArrayList<>();
-        listOfSubtasks.addAll(subtasks.values());
-        return listOfSubtasks;
+        return new ArrayList<Subtask>(subtasks.values());
     }
 
     //методы эпиков
     int createAEpic(Epic epic) { //создание эпика
         if (epic != null) {
-            this.epics.put(this.idEpic, epic);
-            return this.idEpic++;
+            epics.put(id, epic);
+            return id++;
         } else {
-            return 0;
+            return -1;
         }
     }
 
@@ -101,30 +91,26 @@ public class Manager {
     }
 
     void clearAllEpic() { //удалить все эпики
-        this.epics.clear();
-        this.idEpic = 1;
+        epics.clear();
     }
 
     void deleteEpic(int id) { //удалить эпик по id
         if (epics.containsKey(id)) {
-            this.epics.remove(id);
-            this.idEpic -= 1;
+            epics.remove(id);
         }
     }
 
     void overwriteEpic(int id, Epic epic) { //перезаписать эпик
         if (epic != null) {
-            this.epics.put(id, epic);
+            epics.put(id, epic);
         }
     }
 
     ArrayList<Epic> getListOfAllEpics() { //получить список эпиков
-        ArrayList<Epic> listOfEpics = new ArrayList<>();
-        listOfEpics.addAll(epics.values());
-        return listOfEpics;
+        return new ArrayList<Epic>(epics.values());
     }
 
-    ArrayList<Subtask> getListFromEpic1(int id) { //получить список подзадач эпиков
+    ArrayList<Subtask> getListByIdEpic(int id) { //получить список подзадач эпиков
         ArrayList<Subtask> subtasksList = new ArrayList<>();
         for (Subtask o: subtasks.values()) {
             if (o.getNumberOfEpic() == id) {
@@ -134,20 +120,25 @@ public class Manager {
         return subtasksList;
     }
 
-    ArrayList<Subtask> getListFromEpic2(int id) { //получить список подзадач эпиков
+    ArrayList<Subtask> getListFromEpic(int id) { //получить список подзадач эпиков
         ArrayList<Subtask> subtasksList = new ArrayList<>();
-        for (Integer o: epics.get(id).getContentOfTheEpic()) {
-            subtasksList.add(subtasks.get(o));
+        if (epics.containsKey(id)) {
+            for (Integer o : epics.get(id).getSubtaskIds()) {
+                subtasksList.add(subtasks.get(o));
+            }
+        } else {
+            return null;
         }
         return subtasksList;
     }
 
     void checkStatusOfTheEpic(int id){
         if (epics.containsKey(id)) {
-            int numberOfTasks = getListFromEpic2(id).size();
+            ArrayList<Subtask> listSubs = getListFromEpic(id);
+            int numberOfTasks = listSubs.size();
             int statusNew = 0;
             int statusDone = 0;
-            for (Subtask sTask: getListFromEpic2(id)) {
+            for (Subtask sTask: listSubs) {
                 if (sTask.getStatus().equals("NEW")) {
                     statusNew += 1;
                 } else if (sTask.getStatus().equals("DONE")) {
