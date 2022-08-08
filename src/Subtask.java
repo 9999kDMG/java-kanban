@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-public class Subtask extends Task{
+public class Subtask extends Task {
     private int numberOfEpic; //значение принадлежности к эпику
 
     Subtask(String name, String description) {
@@ -12,11 +12,11 @@ public class Subtask extends Task{
         this.numberOfEpic = numberOfEpic;
     }
 
-    void setNumberOfEpic(int id) {
+    public void setNumberOfEpic(int id) {
         this.numberOfEpic = id;
     }
 
-    int getNumberOfEpic() {
+    public int getNumberOfEpic() {
         return this.numberOfEpic;
     }
 

@@ -10,35 +10,34 @@ public class Main {
         Epic epic2 = new Epic("Сходить в магазин", "Купить бытовую химию");
         Subtask subtask3 = new Subtask("Спиисок покупок", "Купить средство для мытья посуды");
 
-        int id;
-        id = manager.createATask(task1);
-        id = manager.createATask(task2);
+        int task1Id = manager.createATask(task1);
+        int task2Id = manager.createATask(task2);
         System.out.println(manager.getListOfAllTasks());
         System.out.println();
 
-        id = manager.createAEpic(epic1);
-        subtask1.setNumberOfEpic(id);
-        subtask2.setNumberOfEpic(id);
-        id = manager.createASubtask(subtask1);
-        epic1.addSubtaskToEpic(id);
-        id = manager.createASubtask(subtask2);
-        epic1.addSubtaskToEpic(id);
-        System.out.println(manager.getEpicById(2));
-        System.out.println(manager.getListFromEpic(2));
+        int epic1Id = manager.createAEpic(epic1);
+        subtask1.setNumberOfEpic(epic1Id);
+        subtask2.setNumberOfEpic(epic1Id);
+        int subtask1Id = manager.createASubtask(subtask1);
+        epic1.addSubtaskToEpic(subtask1Id);
+        int subtask2Id = manager.createASubtask(subtask2);
+        epic1.addSubtaskToEpic(subtask2Id);
+        System.out.println(manager.getEpicById(epic1Id));
+        System.out.println(manager.getListFromEpic(epic1Id));
         System.out.println();
 
-        id = manager.createAEpic(epic2);
-        id = manager.createASubtask(subtask3);
-        epic2.addSubtaskToEpic(id);
-        System.out.println(manager.getEpicById(5));
+        int epic2Id = manager.createAEpic(epic2);
+        int subtask3Id = manager.createASubtask(subtask3);
+        epic2.addSubtaskToEpic(subtask3Id);
+        System.out.println(manager.getEpicById(epic2Id));
         System.out.println();
 
         subtask1.setStatus("DONE");
-        manager.overwriteSubtask(3, subtask1);
+        manager.overwriteSubtask(subtask1Id, subtask1);
         subtask2.setStatus("DONE");
-        manager.overwriteSubtask(4, subtask2);
-        manager.checkStatusOfTheEpic(2);
-        System.out.println(manager.getEpicById(2));
+        manager.overwriteSubtask(subtask2Id, subtask2);
+        manager.checkStatusOfTheEpic(epic1Id);
+        System.out.println(manager.getEpicById(epic1Id));
         System.out.println();
 
         manager.deleteTask(0);

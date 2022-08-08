@@ -1,9 +1,9 @@
 import java.util.Objects;
 
 public class Task {
-    String name; //кратко описывает суть задачи
-    String description; //детальное описание
-    String status; // статус выполнения
+    protected String name; //кратко описывает суть задачи
+    protected String description; //детальное описание
+    protected String status; // статус выполнения
 
     Task(String name, String description) {
         this.name = name;
@@ -11,11 +11,11 @@ public class Task {
         this.status = "NEW";
     }
 
-    void setStatus(String status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    String getStatus() {
+    public String getStatus() {
         return this.status;
     }
 
