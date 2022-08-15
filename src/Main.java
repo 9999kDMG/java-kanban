@@ -1,7 +1,7 @@
 public class Main {
 
     public static void main(String[] args) {
-        Manager manager = new Manager();
+        TaskManager manager = Managers.getDefault();
         Task task1 = new Task("Почта", "Сходить на почту и получить посылку");
         Task task2 = new Task("Налоги", "Заплатить налоги и спать спокойно");
         Subtask subtask1 = new Subtask("Спиисок покупок", "Купить макароны", 1);
@@ -13,6 +13,8 @@ public class Main {
         int task1Id = manager.createATask(task1);
         int task2Id = manager.createATask(task2);
         System.out.println(manager.getListOfAllTasks());
+        System.out.println(manager.getTaskById(task1Id));
+        System.out.println(manager.getTaskById(task2Id));
         System.out.println();
 
         int epic1Id = manager.createAEpic(epic1);
@@ -24,6 +26,8 @@ public class Main {
         epic1.addSubtaskToEpic(subtask2Id);
         System.out.println(manager.getEpicById(epic1Id));
         System.out.println(manager.getListFromEpic(epic1Id));
+        System.out.println(manager.getSubtaskById(subtask1Id));
+        System.out.println(manager.getSubtaskById(subtask2Id));
         System.out.println();
 
         int epic2Id = manager.createAEpic(epic2);
@@ -32,19 +36,22 @@ public class Main {
         System.out.println(manager.getEpicById(epic2Id));
         System.out.println();
 
-        subtask1.setStatus("DONE");
+        subtask1.setStatus(TaskStatus.DONE);
         manager.overwriteSubtask(subtask1Id, subtask1);
-        subtask2.setStatus("DONE");
+        subtask2.setStatus(TaskStatus.DONE);
         manager.overwriteSubtask(subtask2Id, subtask2);
         manager.checkStatusOfTheEpic(epic1Id);
         System.out.println(manager.getEpicById(epic1Id));
         System.out.println();
 
-        manager.deleteTask(0);
+        manager.deleteTask(task1Id);
         System.out.println(manager.getListOfAllTasks());
         System.out.println();
 
-        manager.deleteEpic(2);
+        manager.deleteEpic(epic1Id);
         System.out.println(manager.getListOfAllEpics());
+
+        InMemoryTaskManager taskManager = (InMemoryTaskManager)manager;
+        System.out.println(taskManager.getHistory());
     }
 }

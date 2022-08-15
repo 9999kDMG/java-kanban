@@ -3,19 +3,19 @@ import java.util.Objects;
 public class Task {
     protected String name; //кратко описывает суть задачи
     protected String description; //детальное описание
-    protected String status; // статус выполнения
+    protected TaskStatus status; // статус выполнения
 
     Task(String name, String description) {
         this.name = name;
         this.description = description;
-        this.status = "NEW";
+        this.status = TaskStatus.NEW;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
     }
 
-    public String getStatus() {
+    public TaskStatus getStatus() {
         return this.status;
     }
 
@@ -32,6 +32,6 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" + "name=" + name + '\'' + "description=" + description + '\'' + "status=" + status + "}";
+        return "Task{" + "name=" + name + '\'' + "description=" + description + '\'' + "status=" + status.name() + "}";
     }
 }
