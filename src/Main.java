@@ -51,7 +51,7 @@ public class Main {
         manager.deleteEpic(epic1Id);
         System.out.println(manager.getListOfAllEpics());
 
-        InMemoryTaskManager taskManager = (InMemoryTaskManager)manager;
+        InMemoryTaskManager taskManager = (InMemoryTaskManager) manager;
         System.out.println(taskManager.getHistory());
     }
 }
