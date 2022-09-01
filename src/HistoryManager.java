@@ -1,8 +1,9 @@
 import java.util.List;
 
-public interface HistoryManager {
+public interface HistoryManager<T> {
 
-    void add(Task task);
+    void add(Integer id, T task);
+    void remove(int id);
 
-    List<Task> getHistory();
+    List<T> getHistory();
 }
