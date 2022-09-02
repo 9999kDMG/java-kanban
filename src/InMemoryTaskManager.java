@@ -139,7 +139,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteEpic(int id) { //удалить эпик по id
         Epic epic = getEpicById(id);
         List<Integer> subtaskIds = epic.getSubtaskIds();
-        for (Integer o: subtaskIds) {
+        for (Integer o : subtaskIds) {
             deleteSubtask(o);
         }
         historyManager.remove(id);
