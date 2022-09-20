@@ -64,9 +64,9 @@ public class FileTaskManagerCSVFormatter {
             } else if (dataOfLine[1].equals(TypeTask.EPIC.toString())) {
                 Epic epic = new Epic(dataOfLine[2], dataOfLine[3]);
                 final int subtaskColumnNumbers = 5;
+                epic.setId(Integer.parseInt(dataOfLine[0]));
                 if (dataOfLine.length > subtaskColumnNumbers) {
                     String[] idOfSubtask = dataOfLine[5].split(" ");
-                    epic.setId(Integer.parseInt(dataOfLine[0]));
                     for (String string : idOfSubtask) {
                         int id = Integer.parseInt(string);
                         epic.addSubtaskToEpic(id);
