@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public interface HistoryManager<T> {
@@ -7,4 +8,6 @@ public interface HistoryManager<T> {
     void remove(int id);
 
     List<T> getHistory();
+
+    List<Integer> getHistoryId();
 }

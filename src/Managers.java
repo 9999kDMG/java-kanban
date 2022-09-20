@@ -1,6 +1,8 @@
+import java.io.File;
+
 public class Managers {
-    public static TaskManager getDefault() {
-        return new InMemoryTaskManager();
+    public static TaskManager getDefault(File fileToSave) {
+        return new FileBackedTasksManager(fileToSave);
     }
 
     public static HistoryManager<Task> getDefaultHistory() {

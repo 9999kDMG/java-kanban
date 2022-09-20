@@ -14,7 +14,16 @@ public class Epic extends Task {
     }
 
     public List<Integer> getSubtaskIds() {
-        return this.subtaskIds;
+        return subtaskIds;
+    }
+
+    public String subtaskIdToString() {
+        StringBuilder sb = new StringBuilder();
+        for (Integer id: subtaskIds) {
+            sb.append(id);
+            sb.append(' ');
+        }
+        return sb.toString().strip();
     }
 
     @Override

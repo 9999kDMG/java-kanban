@@ -17,7 +17,7 @@ public class Subtask extends Task {
     }
 
     public int getNumberOfEpic() {
-        return this.numberOfEpic;
+        return numberOfEpic;
     }
 
     @Override
