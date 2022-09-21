@@ -15,6 +15,14 @@ public class Task {
         this.status = TaskStatus.NEW;
     }
 
+    Task(int id, TypeTask type, String name, String description, TaskStatus status) {
+        this.id = id;
+        this.type = type;
+        this.name = name;
+        this.description = description;
+        this.status = status;
+    }
+
     public int getId() {
         return id;
     }

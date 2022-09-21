@@ -49,8 +49,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             br.newLine();
             br.write(FileTaskManagerCSVFormatter.historyToString(super.historyManager));
         } catch (IOException e) {
-            System.out.println("Не удалось записать данные в файл");
-            throw new SaveDataException();
+            throw new SaveDataException("Не удалось записать данные в файл");
         }
     }
 
@@ -80,8 +79,12 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             if (idCounter < super.id) {
                 super.id = idCounter;
             }
-            Task taskFromString = FileTaskManagerCSVFormatter.tasksFromString(line);
-            tasksManager.addTask(taskFromString);
+            try {
+                Task taskFromString = FileTaskManagerCSVFormatter.tasksFromString(line);
+                tasksManager.addTask(taskFromString);
+            } catch (ReadDataException | ArrayIndexOutOfBoundsException | IllegalArgumentException e) {
+                System.out.println(e);
+            }
         }
         return tasksManager;
     }

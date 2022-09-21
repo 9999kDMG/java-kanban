@@ -7,3 +7,4 @@ id,type,name,description,status,epic
 5,SUBTASK,Спиисок покупок,Купить хлеб,NEW,3
 6,SUBTASK,Спиисок покупок,Купить средство для мытья посуды,NEW,3
 
+3 4 5

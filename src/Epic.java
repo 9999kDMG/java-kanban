@@ -9,6 +9,11 @@ public class Epic extends Task {
         subtaskIds = new ArrayList<>();
     }
 
+    Epic(int id, TypeTask type, String name, String description, TaskStatus status) {
+        super(id, type, name, description, status);
+        subtaskIds = new ArrayList<>();
+    }
+
     public void addSubtaskToEpic(Integer subtask) {
         subtaskIds.add(subtask);
     }
@@ -19,7 +24,7 @@ public class Epic extends Task {
 
     public String subtaskIdToString() {
         StringBuilder sb = new StringBuilder();
-        for (Integer id: subtaskIds) {
+        for (Integer id : subtaskIds) {
             sb.append(id);
             sb.append(' ');
         }
