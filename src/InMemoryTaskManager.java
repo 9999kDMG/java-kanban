@@ -1,7 +1,6 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
 
@@ -13,16 +12,18 @@ public class InMemoryTaskManager implements TaskManager {
 
     protected HistoryManager<Task> historyManager = new InMemoryHistoryManager<>();
 
-    @Override
-    public int idCounter() {
+    protected final Set<Task> sortedByTime = new TreeSet<>();
+
+    private int idCounter() {
         return id++;
     }
 
     //методы обычных задач
     @Override
     public int createATask(Task task) { //создание задачи
-        if (task != null) {
+        if (task != null && !isIntersectionTask(task)) {
             tasks.put(id, task);
+            addPrioritizedTasks(task);
             return idCounter();
         } else {
             return -1;
@@ -60,14 +61,15 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public List<Task> getListOfAllTasks() { //получить список задач
-        return new ArrayList<Task>(tasks.values());
+        return new ArrayList<>(tasks.values());
     }
 
     //методы подзадач
     @Override
     public int createASubtask(Subtask subtask) { //создание подзадачи
-        if (subtask != null) {
+        if (subtask != null && !isIntersectionTask(subtask)) {
             subtasks.put(id, subtask);
+            addPrioritizedTasks(subtask);
             return idCounter();
         } else {
             return -1;
@@ -158,25 +160,15 @@ public class InMemoryTaskManager implements TaskManager {
         return new ArrayList<Epic>(epics.values());
     }
 
-    //получить список подзадач эпика, через ID, хранящегося внутри подзадачи
-    @Override
-    public List<Subtask> getListByIdEpic(int id) {
-        List<Subtask> subtasksList = new ArrayList<>();
-        for (Subtask o : subtasks.values()) {
-            if (o.getNumberOfEpic() == id) {
-                subtasksList.add(o);
-            }
-        }
-        return subtasksList;
-    }
-
     //получить список подзадач эпика, через ID, хранящегося внутри эпика
     @Override
     public List<Subtask> getListFromEpic(int id) {
         List<Subtask> subtasksList = new ArrayList<>();
         if (epics.containsKey(id)) {
             for (Integer o : epics.get(id).getSubtaskIds()) {
-                subtasksList.add(subtasks.get(o));
+                if (subtasks.containsKey(o)) {
+                    subtasksList.add(subtasks.get(o));
+                }
             }
         } else {
             return null;
@@ -206,6 +198,50 @@ public class InMemoryTaskManager implements TaskManager {
                 epics.get(id).setStatus(TaskStatus.IN_PROGRESS);
             }
         }
+    }
+
+    @Override
+    public void checkDateTimeOfTheEpic(int id) {
+        if (epics.containsKey(id)) {
+            List<Subtask> listSubs = getListFromEpic(id);
+            LocalDateTime startOfEpic = LocalDateTime.MAX;
+            LocalDateTime endOfEpic = LocalDateTime.MIN;
+            for (Subtask subtask : listSubs) {
+                if (subtask.getStartTime().isBefore(startOfEpic)) {
+                    startOfEpic = subtask.getStartTime();
+                }
+
+                if (subtask.calculateEndTime().isAfter(endOfEpic)) {
+                    endOfEpic = subtask.calculateEndTime();
+                }
+            }
+
+            epics.get(id).setStartTime(startOfEpic);
+            epics.get(id).setEndTime(endOfEpic);
+            epics.get(id).setDuration(Duration.between(startOfEpic, endOfEpic));
+        }
+    }
+
+    private void addPrioritizedTasks(Task task) {
+        sortedByTime.add(task);
+    }
+
+    public List<Task> getPrioritizedTasks() {
+        return new ArrayList<>(sortedByTime);
+    }
+
+    private boolean isIntersectionTask(Task newTask) {
+        List<Task> taskPrioritized = getPrioritizedTasks();
+        if (taskPrioritized.size() == 0) {
+            return false;
+        }
+        for (Task taskInMemory : taskPrioritized) {
+            if (newTask.getStartTime().isBefore(taskInMemory.calculateEndTime()) &&
+                    newTask.calculateEndTime().isAfter(taskInMemory.getStartTime())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<Task> getHistory() {

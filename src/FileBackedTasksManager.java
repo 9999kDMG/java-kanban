@@ -89,7 +89,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         return tasksManager;
     }
 
-    public void addTask(Task taskFromString) {
+    private void addTask(Task taskFromString) {
         if (taskFromString != null) {
             switch (taskFromString.getType()) {
                 case TASK -> super.tasks.put(taskFromString.getId(), taskFromString);
@@ -206,11 +206,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
-    public List<Subtask> getListByIdEpic(int id) {
-        return super.getListByIdEpic(id);
-    }
-
-    @Override
     public List<Subtask> getListFromEpic(int id) {
         return super.getListFromEpic(id);
     }
@@ -226,5 +221,15 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         List<Task> history = super.getHistory();
         save();
         return history;
+    }
+
+    @Override
+    public void checkDateTimeOfTheEpic(int id) {
+        super.checkDateTimeOfTheEpic(id);
+        save();
+    }
+
+    public HistoryManager<Task> getHistoryManager() {
+        return super.historyManager;
     }
 }

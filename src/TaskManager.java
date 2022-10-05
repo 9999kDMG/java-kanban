@@ -2,8 +2,6 @@ import java.util.List;
 
 public interface TaskManager {
 
-    int idCounter();
-
     //методы обычных задач
     int createATask(Task task);
 
@@ -43,9 +41,9 @@ public interface TaskManager {
 
     List<Epic> getListOfAllEpics();
 
-    List<Subtask> getListByIdEpic(int id);
-
     List<Subtask> getListFromEpic(int id);
 
     void checkStatusOfTheEpic(int id);
+
+    void checkDateTimeOfTheEpic(int id);
 }

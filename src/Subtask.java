@@ -1,3 +1,4 @@
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Subtask extends Task {
@@ -10,10 +11,11 @@ public class Subtask extends Task {
     Subtask(String name, String description, int numberOfEpic) {
         super(name, description);
         this.numberOfEpic = numberOfEpic;
+        type = TypeTask.SUBTASK;
     }
 
-    Subtask(int id, TypeTask type, String name, String description, TaskStatus status, int numberOfEpic) {
-        super(id, type, name, description, status);
+    Subtask(int id, TypeTask type, String name, String description, TaskStatus status, int numberOfEpic, LocalDateTime startTime, long duration) {
+        super(id, type, name, description, status, startTime, duration);
         this.numberOfEpic = numberOfEpic;
     }
 
@@ -34,7 +36,16 @@ public class Subtask extends Task {
         return Objects.equals(name, otherTask.name) &&
                 Objects.equals(description, otherTask.description) &&
                 Objects.equals(status, otherTask.status) &&
+                (id == otherTask.id) &&
+                Objects.equals(type, otherTask.type) &&
+                Objects.equals(startTime, otherTask.startTime) &&
+                Objects.equals(duration, otherTask.duration) &&
                 Objects.equals(numberOfEpic, otherTask.numberOfEpic);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, description, status, id, type, startTime, duration, numberOfEpic);
     }
 
     @Override
