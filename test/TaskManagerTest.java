@@ -30,6 +30,8 @@ abstract class TaskManagerTest {
     protected final String file1 = "auto_save.txt";
     protected final File fileToSave = createFile(file1).toFile();
 
+    protected FileBackedTasksManager manager;
+
     protected static Path createFile(String fileName) {
 
         Path filePath = Paths.get("test", fileName);
@@ -42,8 +44,6 @@ abstract class TaskManagerTest {
         }
         return filePath;
     }
-
-    FileBackedTasksManager manager;
 
     //До тестов задать значения LocalDateTime для задач
     @BeforeAll
@@ -84,7 +84,7 @@ abstract class TaskManagerTest {
     @Test
     void shouldDoNotCreateATaskBCIntersectionLDT() {
         task1.setDuration(Duration.ofMinutes(50));
-        int taskId1 = manager.createATask(task1);
+        manager.createATask(task1);
         int taskId2 = manager.createATask(task2);
         assertNull(manager.getTaskById(taskId2));
     }
@@ -102,8 +102,8 @@ abstract class TaskManagerTest {
     //Должен вернуть список задач
     @Test
     void shouldReturnListTasks() {
-        int taskId1 = manager.createATask(task1);
-        int taskId2 = manager.createATask(task2);
+        manager.createATask(task1);
+        manager.createATask(task2);
         assertEquals(List.of(task1, task2), manager.getListOfAllTasks());
     }
 

@@ -1,17 +1,13 @@
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 class InMemoryHistoryManagerTest {
 
-    InMemoryHistoryManager<Task> history;
+    public InMemoryHistoryManager<Task> history;
     public static final Task task1 = new Task("Почта", "получить посылку");
     public static final Subtask subtask1 = new Subtask("Купить", "макароны", 1);
     public final Epic epic1 = new Epic("Сходить в магазин", "продукты");

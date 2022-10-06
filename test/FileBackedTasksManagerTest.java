@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,6 +16,12 @@ class FileBackedTasksManagerTest extends TaskManagerTest {
 
     @Test
     void loadFromFile() throws IOException {
+        Executable executable = new Executable() {
+            @Override
+            public void execute() {
+                System.out.println("Hi");
+            }
+        };
         int epicId = manager.createAEpic(epic1);
         int subtaskId1 = manager.createASubtask(subtask1);
         int taskId = manager.createATask(task1);

@@ -13,8 +13,8 @@ public class Main {
 
         final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm;dd.MM.yy");
 
-        String file1 = "auto_save.txt";
-        File fileToSave = createFile(file1).toFile();
+        String nameFileToSave = "auto_save.txt";
+        File fileToSave = createFile(nameFileToSave).toFile();
         TaskManager manager = Managers.getDefault(fileToSave);
         Task task1 = new Task("Почта", "Сходить на почту и получить посылку");
         task1.setStartTime(LocalDateTime.parse("12:00;04.10.22", DATE_TIME_FORMATTER));
@@ -96,10 +96,10 @@ public class Main {
         System.out.println("PrioritizedTasks");
         System.out.println(taskManager.getPrioritizedTasks());
 
-        String file2 = "auto_save2.txt";
-        File fileToSave2 = createFile(file2).toFile();
-        FileBackedTasksManager manager1 = new FileBackedTasksManager(fileToSave2);
-        manager1 = manager1.loadFromFile(fileToSave, fileToSave2);
+        String nameFileToLoad = "auto_save2.txt";
+        File fileToLoad = createFile(nameFileToLoad).toFile();
+        FileBackedTasksManager manager1 = new FileBackedTasksManager(fileToLoad);
+        manager1 = manager1.loadFromFile(fileToSave, fileToLoad);
         System.out.println(manager1.getListOfAllTasks());
         System.out.println();
         System.out.println(manager1.getListOfAllSubtasks());
