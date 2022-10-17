@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 abstract class TaskManagerTest {
+    protected static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm;dd.MM.yy");
 
     protected static final Task task1 = new Task("Почта", "получить посылку");
 
@@ -24,8 +25,8 @@ abstract class TaskManagerTest {
     protected static final Subtask subtask2 = new Subtask("Купить", "хлеб", 1);
     protected static final Subtask subtask3 = new Subtask("Купить", "средство", 1);
     protected final Epic epic1 = new Epic("Сходить в магазин", "продукты");
-
-    protected static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm;dd.MM.yy");
+    protected static final Epic epic2 = new Epic(0, TypeTask.EPIC, "Сходить в магазин", "продукты",
+            TaskStatus.NEW, LocalDateTime.parse("10:00;04.10.22", DATE_TIME_FORMATTER), 0);
 
     protected final String file1 = "auto_save.txt";
     protected final File fileToSave = createFile(file1).toFile();
@@ -58,6 +59,9 @@ abstract class TaskManagerTest {
         subtask2.setDuration(Duration.ofMinutes(35));
         subtask3.setStartTime(LocalDateTime.parse("14:00;04.10.22", DATE_TIME_FORMATTER));
         subtask3.setDuration(Duration.ofMinutes(25));
+        epic2.addSubtaskToEpic(0);
+        epic2.setEndTime(LocalDateTime.parse("10:00;04.10.22", DATE_TIME_FORMATTER));
+
     }
 
     @BeforeEach

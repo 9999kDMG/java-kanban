@@ -43,7 +43,5 @@ public interface TaskManager {
 
     List<Subtask> getListFromEpic(int id);
 
-    void checkStatusOfTheEpic(int id);
-
-    void checkDateTimeOfTheEpic(int id);
+    List<Task> getHistory();
 }

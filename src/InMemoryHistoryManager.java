@@ -28,6 +28,13 @@ public class InMemoryHistoryManager<T> implements HistoryManager<T> {
         nodeMap.put(id, linkLast(task));
     }
 
+    public void add(T obj) {
+        Task task = (Task)obj;
+        int id = task.getId();
+        removeNode(id);
+        nodeMap.put(id, linkLast(obj));
+    }
+
     @Override
     public void remove(int id) {
         removeNode(id);

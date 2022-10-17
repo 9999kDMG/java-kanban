@@ -13,7 +13,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         this.fileToSave = fileToSave;
     }
 
-    private void save() {
+    protected void save() {
         try (BufferedWriter br = new BufferedWriter(new FileWriter(fileToSave))) {
             br.write(FileTaskManagerCSVFormatter.head());
             br.newLine();

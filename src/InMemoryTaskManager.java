@@ -6,9 +6,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     protected int id = 1; //идентификатор задачи
 
-    protected final Map<Integer, Task> tasks = new HashMap<>();
-    protected final Map<Integer, Subtask> subtasks = new HashMap<>();
-    protected final Map<Integer, Epic> epics = new HashMap<>();
+    protected Map<Integer, Task> tasks = new HashMap<>();
+    protected Map<Integer, Subtask> subtasks = new HashMap<>();
+    protected Map<Integer, Epic> epics = new HashMap<>();
 
     protected HistoryManager<Task> historyManager = new InMemoryHistoryManager<>();
 
@@ -22,6 +22,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public int createATask(Task task) { //создание задачи
         if (task != null && !isIntersectionTask(task)) {
+            task.setId(id);
             tasks.put(id, task);
             addPrioritizedTasks(task);
             return idCounter();
@@ -68,6 +69,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public int createASubtask(Subtask subtask) { //создание подзадачи
         if (subtask != null && !isIntersectionTask(subtask)) {
+            subtask.setId(id);
             subtasks.put(id, subtask);
             addPrioritizedTasks(subtask);
             return idCounter();
@@ -114,6 +116,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public int createAEpic(Epic epic) { //создание эпика
         if (epic != null) {
+            epic.setId(id);
             epics.put(id, epic);
             return idCounter();
         } else {
@@ -176,7 +179,6 @@ public class InMemoryTaskManager implements TaskManager {
         return subtasksList;
     }
 
-    @Override
     public void checkStatusOfTheEpic(int id) {
         if (epics.containsKey(id)) {
             List<Subtask> listSubs = getListFromEpic(id);
@@ -200,7 +202,6 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    @Override
     public void checkDateTimeOfTheEpic(int id) {
         if (epics.containsKey(id)) {
             List<Subtask> listSubs = getListFromEpic(id);

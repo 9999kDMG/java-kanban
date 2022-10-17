@@ -53,6 +53,7 @@ public class Subtask extends Task {
         return "Subtask{" + "name=" + name + '\'' +
                 "description=" + description + '\'' +
                 "status=" + status.name() + '\'' +
-                "numberOfEpic=" + numberOfEpic + "}";
+                "numberOfEpic=" + numberOfEpic +'\'' +
+                "type=" + type.name() + "}";
     }
 }

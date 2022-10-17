@@ -13,7 +13,7 @@ public class Epic extends Task {
         subtaskIds = new ArrayList<>();
         super.setStartTime(LocalDateTime.MIN);
         super.setDuration(Duration.ofMinutes(00));
-        endTime = (LocalDateTime.MIN);
+        endTime = LocalDateTime.MIN;
         type = TypeTask.EPIC;
     }
 

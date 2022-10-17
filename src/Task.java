@@ -29,6 +29,16 @@ public class Task implements Comparable<Task> {
         this.duration = Duration.ofMinutes(duration);
     }
 
+    Task(int id, TypeTask type, String name, String description, TaskStatus status, LocalDateTime startTime, Duration duration) {
+        this.id = id;
+        this.type = type;
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.startTime = startTime;
+        this.duration = duration;
+    }
+
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
@@ -103,7 +113,9 @@ public class Task implements Comparable<Task> {
 
     @Override
     public String toString() {
-        return "Task{" + "name=" + name + '\'' + "description=" + description + '\'' + "status=" + status.name() + "}";
+        return "Task{" + "name=" + name + '\'' + "description=" + description + '\'' + "status=" + status.name() +
+                '\'' + "localDT=" + startTime + '\'' + "duration=" + duration.toMinutes() + '\'' + "type=" + type +
+                '\'' + "id=" + id + "}";
     }
 
     @Override
