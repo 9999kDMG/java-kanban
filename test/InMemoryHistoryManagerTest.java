@@ -1,5 +1,9 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.kanban.tasks.Epic;
+import ru.kanban.managers.InMemoryHistoryManager;
+import ru.kanban.tasks.Subtask;
+import ru.kanban.tasks.Task;
 
 import java.util.List;
 

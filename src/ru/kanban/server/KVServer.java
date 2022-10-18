@@ -1,3 +1,5 @@
+package ru.kanban.server;
+
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.io.IOException;
@@ -8,18 +10,14 @@ import java.util.Map;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
-/**
- * Постман: https://www.getpostman.com/collections/a83b61d9e1c81c10575c
- */
 public class KVServer {
-    public static final int PORT = 8078;
     private final String apiToken;
     private final HttpServer server;
     private final Map<String, String> data = new HashMap<>();
 
     public KVServer() throws IOException {
         apiToken = generateApiToken();
-        server = HttpServer.create(new InetSocketAddress("localhost", PORT), 0);
+        server = HttpServer.create(new InetSocketAddress("localhost", ServerSettings.KV_SERVER_PORT), 0);
         server.createContext("/register", this::register);
         server.createContext("/save", this::save);
         server.createContext("/load", this::load);
@@ -93,8 +91,8 @@ public class KVServer {
     }
 
     public void start() {
-        System.out.println("Запускаем сервер на порту " + PORT);
-        System.out.println("Открой в браузере http://localhost:" + PORT + "/");
+        System.out.println("Запускаем сервер на порту " + ServerSettings.KV_SERVER_PORT);
+        System.out.println("Открой в браузере http://localhost:" + ServerSettings.KV_SERVER_PORT + "/");
         System.out.println("API_TOKEN: " + apiToken);
         server.start();
     }

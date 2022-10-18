@@ -1,3 +1,9 @@
+package ru.kanban.utils;
+
+import ru.kanban.exceptions.ReadDataException;
+import ru.kanban.managers.HistoryManager;
+import ru.kanban.tasks.*;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -34,7 +40,7 @@ public class FileTaskManagerCSVFormatter {
         StringBuilder sb = new StringBuilder();
         sb.append(taskToString(subtask))
                 .append(',')
-                .append(subtask.getNumberOfEpic());
+                .append(subtask.getEpicId());
         return sb.toString();
     }
 
@@ -92,10 +98,10 @@ public class FileTaskManagerCSVFormatter {
                 }
                 return epic;
             } else if (TypeTask.SUBTASK.toString().equals(type)) {
-                int numberOfEpic = Integer.parseInt(dataOfLine[7]);
+                int epicId = Integer.parseInt(dataOfLine[7]);
                 return new Subtask(Integer.parseInt(id),
                         TypeTask.SUBTASK, name, description,
-                        TaskStatus.valueOf(status), numberOfEpic,
+                        TaskStatus.valueOf(status), epicId,
                         LocalDateTime.parse(startTime, DATE_TIME_FORMATTER), Integer.parseInt(duration));
             }
         }

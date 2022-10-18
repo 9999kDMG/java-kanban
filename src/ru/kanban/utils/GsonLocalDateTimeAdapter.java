@@ -1,3 +1,5 @@
+package ru.kanban.utils;
+
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;

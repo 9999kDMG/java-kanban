@@ -1,3 +1,5 @@
+package ru.kanban.tasks;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -12,14 +14,14 @@ public class Task implements Comparable<Task> {
     protected TypeTask type;
     protected int id;
 
-    Task(String name, String description) {
+    public Task(String name, String description) {
         this.name = name;
         this.description = description;
         this.status = TaskStatus.NEW;
         this.type = TypeTask.TASK;
     }
 
-    Task(int id, TypeTask type, String name, String description, TaskStatus status, LocalDateTime startTime, long duration) {
+    public Task(int id, TypeTask type, String name, String description, TaskStatus status, LocalDateTime startTime, long duration) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -29,7 +31,7 @@ public class Task implements Comparable<Task> {
         this.duration = Duration.ofMinutes(duration);
     }
 
-    Task(int id, TypeTask type, String name, String description, TaskStatus status, LocalDateTime startTime, Duration duration) {
+    public Task(int id, TypeTask type, String name, String description, TaskStatus status, LocalDateTime startTime, Duration duration) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -113,7 +115,7 @@ public class Task implements Comparable<Task> {
 
     @Override
     public String toString() {
-        return "Task{" + "name=" + name + '\'' + "description=" + description + '\'' + "status=" + status.name() +
+        return "ru.kanban.tasks.Task{" + "name=" + name + '\'' + "description=" + description + '\'' + "status=" + status.name() +
                 '\'' + "localDT=" + startTime + '\'' + "duration=" + duration.toMinutes() + '\'' + "type=" + type +
                 '\'' + "id=" + id + "}";
     }

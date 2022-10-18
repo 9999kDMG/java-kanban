@@ -1,3 +1,7 @@
+package ru.kanban.managers;
+
+import ru.kanban.tasks.Task;
+
 import java.io.File;
 
 public class Managers {

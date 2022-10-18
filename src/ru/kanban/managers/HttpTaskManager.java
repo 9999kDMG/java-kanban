@@ -1,20 +1,20 @@
+package ru.kanban.managers;
+
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import ru.kanban.utils.GsonMaker;
+import ru.kanban.server.KVTaskClient;
+import ru.kanban.tasks.Epic;
+import ru.kanban.tasks.Subtask;
+import ru.kanban.tasks.Task;
 
 import java.io.IOException;
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class HttpTaskManager extends FileBackedTasksManager {
-    private final Gson gson = new GsonBuilder().
-            registerTypeAdapter(LocalDateTime.class, new GsonLocalDateTimeAdapter()).
-            registerTypeAdapter(Duration.class, new GsonDurationAdapter()).
-            create();
-
+    private final Gson gson = GsonMaker.getGson();
     private final KVTaskClient taskClient = new KVTaskClient();
 
     public HttpTaskManager() {

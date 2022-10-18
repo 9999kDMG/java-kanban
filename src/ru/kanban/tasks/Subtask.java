@@ -1,30 +1,32 @@
+package ru.kanban.tasks;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Subtask extends Task {
-    private int numberOfEpic; //значение принадлежности к эпику
+    private int epicId; //значение принадлежности к эпику
 
-    Subtask(String name, String description) {
+    public Subtask(String name, String description) {
         super(name, description);
     }
 
-    Subtask(String name, String description, int numberOfEpic) {
+    public Subtask(String name, String description, int epicId) {
         super(name, description);
-        this.numberOfEpic = numberOfEpic;
+        this.epicId = epicId;
         type = TypeTask.SUBTASK;
     }
 
-    Subtask(int id, TypeTask type, String name, String description, TaskStatus status, int numberOfEpic, LocalDateTime startTime, long duration) {
+    public Subtask(int id, TypeTask type, String name, String description, TaskStatus status, int epicId, LocalDateTime startTime, long duration) {
         super(id, type, name, description, status, startTime, duration);
-        this.numberOfEpic = numberOfEpic;
+        this.epicId = epicId;
     }
 
-    public void setNumberOfEpic(int id) {
-        this.numberOfEpic = id;
+    public void setEpicId(int id) {
+        this.epicId = id;
     }
 
-    public int getNumberOfEpic() {
-        return numberOfEpic;
+    public int getEpicId() {
+        return epicId;
     }
 
     @Override
@@ -40,20 +42,20 @@ public class Subtask extends Task {
                 Objects.equals(type, otherTask.type) &&
                 Objects.equals(startTime, otherTask.startTime) &&
                 Objects.equals(duration, otherTask.duration) &&
-                Objects.equals(numberOfEpic, otherTask.numberOfEpic);
+                Objects.equals(epicId, otherTask.epicId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, status, id, type, startTime, duration, numberOfEpic);
+        return Objects.hash(name, description, status, id, type, startTime, duration, epicId);
     }
 
     @Override
     public String toString() {
-        return "Subtask{" + "name=" + name + '\'' +
+        return "ru.kanban.tasks.Subtask{" + "name=" + name + '\'' +
                 "description=" + description + '\'' +
                 "status=" + status.name() + '\'' +
-                "numberOfEpic=" + numberOfEpic +'\'' +
+                "epicId=" + epicId + '\'' +
                 "type=" + type.name() + "}";
     }
 }

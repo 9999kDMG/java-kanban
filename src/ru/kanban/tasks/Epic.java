@@ -1,3 +1,5 @@
+package ru.kanban.tasks;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -8,7 +10,7 @@ public class Epic extends Task {
     private final List<Integer> subtaskIds;
     private LocalDateTime endTime;
 
-    Epic(String name, String description) {
+    public Epic(String name, String description) {
         super(name, description);
         subtaskIds = new ArrayList<>();
         super.setStartTime(LocalDateTime.MIN);
@@ -17,7 +19,7 @@ public class Epic extends Task {
         type = TypeTask.EPIC;
     }
 
-    Epic(int id, TypeTask type, String name, String description, TaskStatus status, LocalDateTime startTime, long duration) {
+    public Epic(int id, TypeTask type, String name, String description, TaskStatus status, LocalDateTime startTime, long duration) {
         super(id, type, name, description, status, startTime, duration);
         subtaskIds = new ArrayList<>();
     }
@@ -49,7 +51,7 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return "Epic{" + "name=" + '\'' + name + '\'' +
+        return "ru.kanban.tasks.Epic{" + "name=" + '\'' + name + '\'' +
                 " description=" + '\'' + description + '\'' +
                 " status=" + '\'' + status.name() + '\'' +
                 " id=" + id +

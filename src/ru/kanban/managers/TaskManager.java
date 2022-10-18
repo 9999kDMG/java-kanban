@@ -1,3 +1,9 @@
+package ru.kanban.managers;
+
+import ru.kanban.tasks.Epic;
+import ru.kanban.tasks.Subtask;
+import ru.kanban.tasks.Task;
+
 import java.util.List;
 
 public interface TaskManager {

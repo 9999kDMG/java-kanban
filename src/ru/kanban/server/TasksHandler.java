@@ -1,5 +1,9 @@
+package ru.kanban.server;
+
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import ru.kanban.managers.TaskManager;
+import ru.kanban.server.Extradition;
 
 import java.io.IOException;
 import java.util.function.Consumer;
@@ -45,7 +49,6 @@ public class TasksHandler implements HttpHandler {
     }
 
     private void choiceRequest(HttpExchange exchange, String patternPath, Consumer<HttpExchange> consumer) {
-
         String uri = exchange.getRequestURI().getPath();
 
         if (patternPath.equals(uri)) {

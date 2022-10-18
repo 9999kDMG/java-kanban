@@ -1,3 +1,7 @@
+package ru.kanban.managers;
+
+import ru.kanban.tasks.Task;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

@@ -1,3 +1,13 @@
+package ru.kanban.managers;
+
+import ru.kanban.exceptions.ReadDataException;
+import ru.kanban.exceptions.SaveDataException;
+import ru.kanban.tasks.Epic;
+import ru.kanban.tasks.Subtask;
+import ru.kanban.tasks.Task;
+import ru.kanban.tasks.TypeTask;
+import ru.kanban.utils.FileTaskManagerCSVFormatter;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -84,6 +94,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 tasksManager.addTask(taskFromString);
             } catch (ReadDataException | ArrayIndexOutOfBoundsException | IllegalArgumentException e) {
                 System.out.println(e);
+                throw new ReadDataException("Не удалось записать данные в файл");
             }
         }
         return tasksManager;
@@ -92,9 +103,15 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     private void addTask(Task taskFromString) {
         if (taskFromString != null) {
             switch (taskFromString.getType()) {
-                case TASK -> super.tasks.put(taskFromString.getId(), taskFromString);
-                case EPIC -> super.epics.put(taskFromString.getId(), (Epic) taskFromString);
-                case SUBTASK -> super.subtasks.put(taskFromString.getId(), (Subtask) taskFromString);
+                case TASK:
+                    super.tasks.put(taskFromString.getId(), taskFromString);
+                    break;
+                case EPIC:
+                    super.epics.put(taskFromString.getId(), (Epic) taskFromString);
+                    break;
+                case SUBTASK:
+                    super.subtasks.put(taskFromString.getId(), (Subtask) taskFromString);
+                    break;
             }
             save();
         }

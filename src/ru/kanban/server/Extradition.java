@@ -1,21 +1,22 @@
+package ru.kanban.server;
+
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
+import ru.kanban.utils.GsonMaker;
+import ru.kanban.managers.TaskManager;
+import ru.kanban.tasks.Epic;
+import ru.kanban.tasks.Subtask;
+import ru.kanban.tasks.Task;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class Extradition {
     private TaskManager manager;
-    private final Gson gson = new GsonBuilder().
-            registerTypeAdapter(LocalDateTime.class, new GsonLocalDateTimeAdapter()).
-            registerTypeAdapter(Duration.class, new GsonDurationAdapter()).
-            create();
+    private final Gson gson = GsonMaker.getGson();
 
     public Extradition(TaskManager manager) {
         this.manager = manager;
@@ -171,10 +172,10 @@ public class Extradition {
     }
 
     public void deleteAll(HttpExchange exchange) {
-                manager.clearAllTask();
-                manager.clearAllSubtask();
-                manager.clearAllEpic();
-                clearTasks(exchange);
+        manager.clearAllTask();
+        manager.clearAllSubtask();
+        manager.clearAllEpic();
+        clearTasks(exchange);
     }
 
     public void getListOfAll(HttpExchange exchange) {
@@ -199,7 +200,7 @@ public class Extradition {
     }
 
 
-    void getHistory(HttpExchange exchange) {
+    public void getHistory(HttpExchange exchange) {
         List<Task> subtasks = manager.getHistory();
         sendOutput(exchange, subtasks, 200);
     }

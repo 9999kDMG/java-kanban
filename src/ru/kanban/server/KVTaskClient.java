@@ -1,5 +1,7 @@
+package ru.kanban.server;
+
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import ru.kanban.utils.GsonMaker;
 
 import java.io.IOException;
 import java.net.URI;
@@ -8,17 +10,12 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.time.Duration;
-import java.time.LocalDateTime;
 
 public class KVTaskClient {
     private static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
-    private final String ServerURL = "http://localhost:8078";
+    private final String ServerURL = "http://localhost:" + ServerSettings.KV_SERVER_PORT;
     private String token;
-    private final Gson GSON = new GsonBuilder().
-            registerTypeAdapter(LocalDateTime.class, new GsonLocalDateTimeAdapter()).
-            registerTypeAdapter(Duration.class, new GsonDurationAdapter()).
-            create();
+    private final Gson GSON = GsonMaker.getGson();
 
     public KVTaskClient() {
         token = getServerToken();

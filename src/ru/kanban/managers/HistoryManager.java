@@ -1,3 +1,5 @@
+package ru.kanban.managers;
+
 import java.util.List;
 
 public interface HistoryManager<T> {
